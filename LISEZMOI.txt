@@ -1,0 +1,16 @@
+MAQUETTE GESMART (Tabler) - consultation locale
+
+1. Décompressez le dossier.
+2. Double-cliquez sur index.html (page de connexion), puis cliquez sur "Se connecter".
+3. Naviguez avec le menu de gauche : 11 pages.
+
+IMPORTANT : Tabler et les icônes sont chargés depuis internet (jsDelivr).
+Il faut donc une connexion internet pour voir le style.
+
+Pour travailler hors ligne :
+- Téléchargez tabler.min.css et tabler.min.js (voir liens donnés dans la conversation),
+  placez-les dans le dossier assets/, puis remplacez dans les pages
+  les adresses https://cdn.jsdelivr.net/... par assets/tabler.min.css et assets/tabler.min.js.
+- Même chose pour les icônes (@tabler/icons-webfont).
+
+Les données sont fictives.
