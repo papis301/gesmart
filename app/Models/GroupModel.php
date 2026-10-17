@@ -42,6 +42,27 @@ final class GroupModel extends BaseModel
         return array_column($rows, 'alias');
     }
 
+    /**
+     * Groupes qu'un utilisateur peut attribuer : le sien et ceux dont les droits sont
+     * tous contenus dans les siens (on ne peut pas donner plus que ce qu'on possède).
+     *
+     * @return array<int, array{id:string,name:string}>
+     */
+    public function assignableGroups(int $editorGroupId): array
+    {
+        $groups = Database::run('SELECT `id`, `name` FROM `groups` WHERE `deleted_at` IS NULL ORDER BY `name` ASC')->fetchAll();
+        $map = [];
+        foreach (Database::run('SELECT `group_id`, `alias` FROM `rules`')->fetchAll() as $r) {
+            $map[(int) $r['group_id']][$r['alias']] = true;
+        }
+        $mine = $map[$editorGroupId] ?? [];
+
+        return array_values(array_filter($groups, static function (array $g) use ($map, $mine, $editorGroupId): bool {
+            $id = (int) $g['id'];
+            return $id === $editorGroupId || array_diff_key($map[$id] ?? [], $mine) === [];
+        }));
+    }
+
     public function usersCount(int $groupId): int
     {
         return (int) Database::run(

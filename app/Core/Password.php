@@ -30,6 +30,18 @@ final class Password
         return self::isLegacy($stored) || password_needs_rehash($stored, PASSWORD_DEFAULT);
     }
 
+    /**
+     * Valeur à enregistrer dans users.password pour un nouveau mot de passe.
+     * security.password_storage : 'legacy_sha1' (compatible avec l'ancienne application, par défaut)
+     * ou 'modern' (password_hash, à choisir quand l'ancienne application n'est plus utilisée).
+     */
+    public static function forStorage(string $plain): string
+    {
+        return Config::get('security.password_storage', 'legacy_sha1') === 'modern'
+            ? self::hash($plain)
+            : sha1($plain);
+    }
+
     public static function hash(string $plain): string
     {
         return password_hash($plain, PASSWORD_DEFAULT);

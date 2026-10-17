@@ -55,6 +55,19 @@ final class Session
         $_SESSION['_flash'][$key] = $value;
     }
 
+    /** Conserve la saisie d'un formulaire refusé (jamais les mots de passe). */
+    public static function setOld(array $data): void
+    {
+        $_SESSION['_old'] = $data;
+    }
+
+    public static function pullOld(): array
+    {
+        $old = $_SESSION['_old'] ?? [];
+        unset($_SESSION['_old']);
+        return is_array($old) ? $old : [];
+    }
+
     /** Lit puis supprime un message flash. */
     public static function pull(string $key): ?string
     {

@@ -18,6 +18,12 @@ final class View
         echo self::capture($layout, $data + ['content' => $content]);
     }
 
+    /** Rend une vue et renvoie le HTML (pour les morceaux de page réutilisables). */
+    public static function partial(string $view, array $data = []): string
+    {
+        return self::capture($view, $data);
+    }
+
     private static function capture(string $view, array $data): string
     {
         $file = APP_DIR . '/Views/' . $view . '.php';
