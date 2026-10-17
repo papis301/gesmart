@@ -4,6 +4,8 @@ declare(strict_types=1);
 use App\Controllers\AuthController;
 use App\Controllers\DashboardController;
 use App\Controllers\GroupController;
+use App\Controllers\ProductController;
+use App\Controllers\UnityController;
 use App\Controllers\UserController;
 
 /** @var App\Core\Router $router */
@@ -27,6 +29,20 @@ $router->add('POST', 'utilisateurs',            [UserController::class, 'create'
 $router->add('GET',  'utilisateurs/(:num)',     [UserController::class, 'info']);
 $router->add('POST', 'utilisateurs/modifier',   [UserController::class, 'edit']);
 $router->add('POST', 'utilisateurs/supprimer',  [UserController::class, 'delete']);
+
+// Unités de production (droits : unities / create_unity / info_unity / edit_unity / delete_unity)
+$router->add('GET',  'unites',            [UnityController::class, 'index']);
+$router->add('POST', 'unites',            [UnityController::class, 'create']);
+$router->add('GET',  'unites/(:num)',     [UnityController::class, 'info']);
+$router->add('POST', 'unites/modifier',   [UnityController::class, 'edit']);
+$router->add('POST', 'unites/supprimer',  [UnityController::class, 'delete']);
+
+// Produits (droits : products / create_product / info_product / edit_product / delete_product)
+$router->add('GET',  'produits',            [ProductController::class, 'index']);
+$router->add('POST', 'produits',            [ProductController::class, 'create']);
+$router->add('GET',  'produits/(:num)',     [ProductController::class, 'info']);
+$router->add('POST', 'produits/modifier',   [ProductController::class, 'edit']);
+$router->add('POST', 'produits/supprimer',  [ProductController::class, 'delete']);
 
 // Les modules CRUD s'ajouteront ici, avec le 5e paramètre à true pour appliquer la table rules :
 // $router->add('GET', 'clients', [ClientController::class, 'index'], true, true);

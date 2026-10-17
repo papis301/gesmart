@@ -4,4 +4,5 @@ return [
     'groupes',
     'utilisateurs',
     'unites',
+    'produits',
 ];
