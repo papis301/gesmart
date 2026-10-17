@@ -1,0 +1,8 @@
+# À utiliser UNIQUEMENT si le dossier du site (racine web) est celui du projet,
+# et non le sous-dossier public/. Tout est redirigé vers public/.
+Options -Indexes
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^$ public/ [L]
+  RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>

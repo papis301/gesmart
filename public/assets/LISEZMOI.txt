@@ -1,0 +1,5 @@
+Fichiers statiques (facultatifs)
+
+- img/logo.svg   : logo (copie depuis https://gesmart.abdoumartgroup.sn/assets/img/logo.svg)
+- img/bg.webp    : image de fond de la page de connexion
+- tabler.min.css et tabler.min.js : uniquement si vous mettez 'assets' => ['cdn' => false] dans config.php
