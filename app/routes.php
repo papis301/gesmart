@@ -10,6 +10,7 @@ use App\Controllers\UserController;
 use App\Controllers\CashRegisterController;
 use App\Controllers\ClientController;
 use App\Controllers\BankController;
+use App\Controllers\SaleController;
 
 /** @var App\Core\Router $router */
 
@@ -69,3 +70,6 @@ $router->add('POST', 'banques/supprimer-lien-banque-unite', [BankController::cla
 $router->add('GET',  'banques/(:segment)',                  [BankController::class, 'info'],                    true, true);
 // Les modules CRUD s'ajouteront ici, avec le 5e paramètre à true pour appliquer la table rules :
 // $router->add('GET', 'clients', [ClientController::class, 'index'], true, true);
+
+$router->add('GET', 'ventes',        [SaleController::class, 'index'], true, true);
+$router->add('GET', 'ventes/(:num)', [SaleController::class, 'info'],  true, true);
