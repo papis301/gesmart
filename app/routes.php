@@ -7,6 +7,9 @@ use App\Controllers\GroupController;
 use App\Controllers\ProductController;
 use App\Controllers\UnityController;
 use App\Controllers\UserController;
+use App\Controllers\CashRegisterController;
+use App\Controllers\ClientController;
+use App\Controllers\BankController;
 
 /** @var App\Core\Router $router */
 
@@ -44,5 +47,25 @@ $router->add('GET',  'produits/(:num)',     [ProductController::class, 'info']);
 $router->add('POST', 'produits/modifier',   [ProductController::class, 'edit']);
 $router->add('POST', 'produits/supprimer',  [ProductController::class, 'delete']);
 
+$router->add('GET',  'caisses',           [CashRegisterController::class, 'index'],  true, true);
+$router->add('POST', 'caisses',           [CashRegisterController::class, 'create'], true, true);
+$router->add('GET',  'caisses/(:num)',    [CashRegisterController::class, 'info'],   true, true);
+$router->add('POST', 'caisses/modifier',  [CashRegisterController::class, 'edit'],   true, true);
+$router->add('POST', 'caisses/supprimer', [CashRegisterController::class, 'delete'], true, true);
+
+$router->add('GET',  'clients',           [ClientController::class, 'index'],           true, true);
+$router->add('POST', 'clients',           [ClientController::class, 'create'],          true, true);
+$router->add('GET',  'clients/(:num)',    [ClientController::class, 'info'],            true, true);
+$router->add('POST', 'clients/modifier',  [ClientController::class, 'edit'],            true, true);
+$router->add('POST', 'clients/supprimer', [ClientController::class, 'delete'],          true, true);
+$router->add('POST', 'clients/valider',   [ClientController::class, 'validate_client'], true, true);
+
+$router->add('GET',  'banques',                             [BankController::class, 'index'],                   true, true);
+$router->add('POST', 'banques',                             [BankController::class, 'create'],                  true, true);
+$router->add('POST', 'banques/modifier',                    [BankController::class, 'edit'],                    true, true);
+$router->add('POST', 'banques/supprimer',                   [BankController::class, 'delete'],                  true, true);
+$router->add('POST', 'banques/creer-lien-banque-unite',     [BankController::class, 'create_bank_unity_link'],  true, true);
+$router->add('POST', 'banques/supprimer-lien-banque-unite', [BankController::class, 'delete_bank_unity_link'], true, true);
+$router->add('GET',  'banques/(:segment)',                  [BankController::class, 'info'],                    true, true);
 // Les modules CRUD s'ajouteront ici, avec le 5e paramètre à true pour appliquer la table rules :
 // $router->add('GET', 'clients', [ClientController::class, 'index'], true, true);

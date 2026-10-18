@@ -5,4 +5,7 @@ return [
     'utilisateurs',
     'unites',
     'produits',
+    'caisses',
+    'clients',
+    'banques',
 ];
