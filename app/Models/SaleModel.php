@@ -92,6 +92,38 @@ final class SaleModel extends BaseModel
         return ['rows' => $rows, 'total' => $total];
     }
 
+    /**
+     * Ventes en attente de validation (ni validées ni annulées).
+     * @return array{rows: array, total: int}
+     */
+    public function pending(string $term, int $page, int $perPage): array
+    {
+        $from = ' FROM `sales` s
+                  LEFT JOIN `clients` c ON c.`id` = s.`client_id`
+                  LEFT JOIN `unities` un ON un.`id` = s.`unity_id`
+                  LEFT JOIN `cash_registers` cr ON cr.`id` = s.`cash_register_id`
+                  LEFT JOIN `users` u ON u.`id` = s.`user_id`
+                 WHERE s.`deleted_at` IS NULL AND s.`validated_at` IS NULL AND s.`aborded_at` IS NULL';
+        $params = [];
+        if ($term !== '') {
+            $like = '%' . addcslashes($term, '%_\\') . '%';
+            $from .= ' AND (s.`id` LIKE ? OR c.`name` LIKE ? OR CAST(c.`id` AS CHAR) LIKE ? OR cr.`name` LIKE ? OR u.`name` LIKE ? OR un.`name` LIKE ?)';
+            array_push($params, $like, $like, $like, $like, $like, $like);
+        }
+        $total = (int) Database::run('SELECT COUNT(*)' . $from, $params)->fetchColumn();
+        $offset = max(0, ($page - 1) * $perPage);
+        $rows = Database::run(
+            'SELECT s.`id`, s.`debt`, s.`taxes`, s.`total`, s.`created_at`, s.`updated_at`, s.`validated_at`, s.`aborded_at`,
+                    s.`client_id`, c.`name` AS client_name, c.`phone` AS client_phone, c.`email` AS client_email,
+                    un.`name` AS unity_name, cr.`name` AS register_name,
+                    u.`name` AS cashier_name, u.`email` AS cashier_email, u.`phone` AS cashier_phone'
+            . $from . ' ORDER BY s.`created_at` DESC, s.`id` DESC LIMIT ' . (int) $perPage . ' OFFSET ' . (int) $offset,
+            $params
+        )->fetchAll();
+
+        return ['rows' => $rows, 'total' => $total];
+    }
+
     public function detail(string $id): ?array
     {
         $row = Database::run(

@@ -51,6 +51,26 @@ final class SaleController
         ]);
     }
 
+    /** Ventes en attente de validation (droit list_sale_validations). */
+    public function list_sale_validations(): void
+    {
+        $term = trim((string) ($_GET['s'] ?? ''));
+        $page = max(1, (int) ($_GET['page'] ?? 1));
+        $result = $this->sales->pending($term, $page, self::PER_PAGE);
+        $gid = (int) Auth::user()['group_id'];
+
+        View::render('sales/validations', [
+            'title'   => 'En attente de validation | Ventes',
+            'actions' => '',
+            'rows'    => $result['rows'],
+            'total'   => $result['total'],
+            'page'    => $page,
+            'pages'   => max(1, (int) ceil($result['total'] / self::PER_PAGE)),
+            'term'    => $term,
+            'canInfo' => \App\Core\Permission::hasAlias($gid, 'info_sale'),
+        ]);
+    }
+
     public function info(string $id): void
     {
         $sale = $this->sales->detail($id);

@@ -11,6 +11,13 @@ use App\Controllers\CashRegisterController;
 use App\Controllers\ClientController;
 use App\Controllers\BankController;
 use App\Controllers\SaleController;
+use App\Controllers\CollectionController;
+use App\Controllers\InterRegisterTransferController;
+use App\Controllers\InterUnitTransferController;
+use App\Controllers\InterClientTransferController;
+use App\Controllers\PaymentController;
+use App\Controllers\WithdrawalController;
+use App\Controllers\DisbursementController;
 
 /** @var App\Core\Router $router */
 
@@ -73,3 +80,36 @@ $router->add('GET',  'banques/(:segment)',                  [BankController::cla
 
 $router->add('GET', 'ventes',        [SaleController::class, 'index'], true, true);
 $router->add('GET', 'ventes/(:num)', [SaleController::class, 'info'],  true, true);
+
+$router->add('GET', 'encaissements',        [CollectionController::class, 'index'], true, true);
+$router->add('GET', 'encaissements/(:num)', [CollectionController::class, 'info'],  true, true);
+
+$router->add('GET', 'transferts/inter_caisses',        [InterRegisterTransferController::class, 'index'], true, true);
+$router->add('GET', 'transferts/inter_caisses/(:num)', [InterRegisterTransferController::class, 'info'],  true, true);
+
+$router->add('GET', 'transferts/hors_places',        [InterUnitTransferController::class, 'index'], true, true);
+$router->add('GET', 'transferts/hors_places/(:num)', [InterUnitTransferController::class, 'info'],  true, true);
+
+$router->add('GET', 'transferts/compte_a_comptes',        [InterClientTransferController::class, 'index'], true, true);
+$router->add('GET', 'transferts/compte_a_comptes/(:num)', [InterClientTransferController::class, 'info'],  true, true);
+
+$router->add('GET', 'versements',        [PaymentController::class, 'index'], true, true);
+$router->add('GET', 'versements/(:num)', [PaymentController::class, 'info'],  true, true);
+
+$router->add('GET', 'retraits',        [WithdrawalController::class, 'index'], true, true);
+$router->add('GET', 'retraits/(:num)', [WithdrawalController::class, 'info'],  true, true);
+
+$router->add('GET', 'validations/ventes', [SaleController::class, 'list_sale_validations'], true, true);
+
+$router->add('GET', 'validations/decaissements', [DisbursementController::class, 'list_disbursement_validations'], true, true);
+$router->add('GET', 'decaissements/(:num)',       [DisbursementController::class, 'info'], true, true);
+
+$router->add('GET', 'validations/transferts/inter_caisses', [InterRegisterTransferController::class, 'list_inter_register_transfer_validations'], true, true);
+
+$router->add('GET', 'transferts/hors_places',             [InterUnitTransferController::class, 'index'],   true, true);
+$router->add('GET', 'transferts/hors_places/(:num)',      [InterUnitTransferController::class, 'info'],    true, true);
+
+$router->add('GET', 'validations/transferts/hors_places', [InterUnitTransferController::class, 'list_inter_unit_transfer_validations'], true, true);
+$router->add('GET', 'validations/transferts/compte_a_comptes', [InterClientTransferController::class, 'list_inter_client_transfer_validations'], true, true);
+
+$router->add('GET', 'validations/versements', [PaymentController::class, 'list_payments'], true, true);
