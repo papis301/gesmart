@@ -106,10 +106,8 @@ $router->add('GET', 'decaissements/(:num)',       [DisbursementController::class
 
 $router->add('GET', 'validations/transferts/inter_caisses', [InterRegisterTransferController::class, 'list_inter_register_transfer_validations'], true, true);
 
-$router->add('GET', 'transferts/hors_places',             [InterUnitTransferController::class, 'index'],   true, true);
-$router->add('GET', 'transferts/hors_places/(:num)',      [InterUnitTransferController::class, 'info'],    true, true);
-
 $router->add('GET', 'validations/transferts/hors_places', [InterUnitTransferController::class, 'list_inter_unit_transfer_validations'], true, true);
 $router->add('GET', 'validations/transferts/compte_a_comptes', [InterClientTransferController::class, 'list_inter_client_transfer_validations'], true, true);
 
 $router->add('GET', 'validations/versements', [PaymentController::class, 'list_payments'], true, true);
+$router->add('GET', 'validations/retraits', [WithdrawalController::class, 'list_withdrawals'], true, true);

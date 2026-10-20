@@ -46,14 +46,20 @@ final class WithdrawalModel extends BaseModel
                   LEFT JOIN `clients` c ON c.`id` = w.`client_id`
                  WHERE w.`deleted_at` IS NULL';
 
-    /** @return array{rows: array, total: int} */
-    public function search(string $term, int $page, int $perPage): array
+    /** Retraits non annulés, non validés ou validés mais pas encore confirmés. */
+    public function pending(string $term, int $page, int $perPage): array
     {
-        $where = '';
+        return $this->search($term, $page, $perPage, true);
+    }
+
+    /** @return array{rows: array, total: int} */
+    public function search(string $term, int $page, int $perPage, bool $pendingOnly = false): array
+    {
+        $where = $pendingOnly ? ' AND w.`aborded_at` IS NULL AND (w.`validated_at` IS NULL OR w.`confirmed_at` IS NULL)' : '';
         $params = [];
         if ($term !== '') {
             $like = '%' . addcslashes($term, '%_\\') . '%';
-            $where = ' AND (CAST(w.`id` AS CHAR) LIKE ? OR w.`desc` LIKE ? OR u.`name` LIKE ? OR fb.`name` LIKE ? OR fb.`id` LIKE ? OR tb.`name` LIKE ? OR c.`name` LIKE ?)';
+            $where .= ' AND (CAST(w.`id` AS CHAR) LIKE ? OR w.`desc` LIKE ? OR u.`name` LIKE ? OR fb.`name` LIKE ? OR fb.`id` LIKE ? OR tb.`name` LIKE ? OR c.`name` LIKE ?)';
             array_push($params, $like, $like, $like, $like, $like, $like, $like);
         }
         $total = (int) Database::run('SELECT COUNT(*)' . self::FROM . $where, $params)->fetchColumn();

@@ -38,6 +38,26 @@ final class WithdrawalController
         ]);
     }
 
+    /** Retraits en attente de validation/confirmation (droit list_withdrawals). */
+    public function list_withdrawals(): void
+    {
+        $term = trim((string) ($_GET['s'] ?? ''));
+        $page = max(1, (int) ($_GET['page'] ?? 1));
+        $result = $this->withdrawals->pending($term, $page, self::PER_PAGE);
+        $gid = (int) Auth::user()['group_id'];
+
+        View::render('withdrawals/validations', [
+            'title'   => 'Retraits bancaires',
+            'actions' => '',
+            'rows'    => $result['rows'],
+            'total'   => $result['total'],
+            'page'    => $page,
+            'pages'   => max(1, (int) ceil($result['total'] / self::PER_PAGE)),
+            'term'    => $term,
+            'canInfo' => Permission::hasAlias($gid, 'info_withdrawal'),
+        ]);
+    }
+
     public function info(string $id): void
     {
         $w = $this->withdrawals->detail((int) $id);
