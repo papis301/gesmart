@@ -18,6 +18,9 @@ use App\Controllers\InterClientTransferController;
 use App\Controllers\PaymentController;
 use App\Controllers\WithdrawalController;
 use App\Controllers\DisbursementController;
+use App\Controllers\ClosureController;
+use App\Controllers\RegularisationController;
+use App\Controllers\ReportController;
 
 /** @var App\Core\Router $router */
 
@@ -111,3 +114,11 @@ $router->add('GET', 'validations/transferts/compte_a_comptes', [InterClientTrans
 
 $router->add('GET', 'validations/versements', [PaymentController::class, 'list_payments'], true, true);
 $router->add('GET', 'validations/retraits', [WithdrawalController::class, 'list_withdrawals'], true, true);
+
+$router->add('GET', 'arretes-de-caisses',        [ClosureController::class, 'index'], true, true);
+$router->add('GET', 'arretes-de-caisses/(:num)', [ClosureController::class, 'info'],  true, true);
+
+$router->add('GET', 'regularisations',            [RegularisationController::class, 'index'], true, true);
+$router->add('GET', 'regularisations/(:segment)', [RegularisationController::class, 'info'],  true, true);
+
+$router->add('GET', 'rapports/transactions', [ReportController::class, 'transaction'], true, true);

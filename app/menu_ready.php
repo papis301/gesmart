@@ -22,4 +22,7 @@ return [
     'transferts/compte_a_comptes',
     'versements',
     'retraits',
+    'arretes-de-caisses',
+    'regularisations',
+    'rapports/transactions',
 ];
