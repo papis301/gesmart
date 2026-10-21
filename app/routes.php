@@ -22,6 +22,7 @@ use App\Controllers\ClosureController;
 use App\Controllers\RegularisationController;
 use App\Controllers\ReportController;
 
+
 /** @var App\Core\Router $router */
 
 // add(méthode, chemin, [Contrôleur, action], exiger_connexion, exiger_droit_rules)
@@ -122,3 +123,9 @@ $router->add('GET', 'regularisations',            [RegularisationController::cla
 $router->add('GET', 'regularisations/(:segment)', [RegularisationController::class, 'info'],  true, true);
 
 $router->add('GET', 'rapports/transactions', [ReportController::class, 'transaction'], true, true);
+$router->add('GET', 'rapports/releves-de-compte', [ReportController::class, 'account_statement'], true, true);
+$router->add('GET', 'rapports/historique-de-caisse', [ReportController::class, 'cash_register_history'], true, true);
+$router->add('GET', 'rapports/historique-de-compte-bancaire', [ReportController::class, 'bank_history'], true, true);
+$router->add('GET', 'rapports/situation-globale', [ReportController::class, 'globale_state'], true, true);
+$router->add('GET', 'rapports/etat-des-charges', [ReportController::class, 'charges_state'], true, true);
+$router->add('GET', 'rapports/etat-de-la-tresorerie-par-point', [ReportController::class, 'cash_state'], true, true);

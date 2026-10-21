@@ -41,6 +41,7 @@ $userMenu = static function (string $extraClass = '') use ($user, $initial): str
     .datagrid-content { box-shadow: rgba(0,0,0,.12) 0 1px 3px, rgba(0,0,0,.24) 0 1px 2px; padding: 5px; border-radius: 3px; }
     .nav-link.disabled { opacity: .55; cursor: default; }
   </style>
+    <?= $head ?? '' ?>
 </head>
 
 <body class="layout-fluid">
@@ -156,6 +157,7 @@ $userMenu = static function (string $extraClass = '') use ($user, $initial): str
   </div>
   <script src="<?= e(asset('tabler.min.js')) ?>"></script>
   <script src="<?= e(asset('app.js')) ?>" defer></script>
+    <?= $foot ?? '' ?>
 </body>
 
 </html>

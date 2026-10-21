@@ -25,4 +25,10 @@ return [
     'arretes-de-caisses',
     'regularisations',
     'rapports/transactions',
+    'rapports/releves-de-compte',
+    'rapports/historique-de-caisse',
+    'rapports/historique-de-compte-bancaire',
+    'rapports/situation-globale',
+    'rapports/etat-des-charges',
+    'rapports/etat-de-la-tresorerie-par-point',
 ];
